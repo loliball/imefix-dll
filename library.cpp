@@ -38,7 +38,10 @@ BOOL WINAPI PeekMessageNew(
     BOOL result = peekMessageOld(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax, wRemoveMsg);
     if (result != 0) {
         if (lpMsg->wParam == VK_PROCESSKEY) {
-            lpMsg->wParam = ImmGetVirtualKey(lpMsg->hwnd);
+            UINT vk = ImmGetVirtualKey(lpMsg->hwnd);
+            if (vk == VK_F6 || vk == VK_F10) {
+                lpMsg->wParam = vk;
+            }
         }
 //        uint32_t msg = lpMsg->message;
 //        if (msg == WM_KEYDOWN) {
